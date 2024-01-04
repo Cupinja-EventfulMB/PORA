@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EventfulMB</string>
+    <string name="message_button">Message Button</string>
+    <string name="message">Message</string>
 </resources>

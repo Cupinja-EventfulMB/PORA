@@ -2,4 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#3BCAC4CF</color>
+    <color name="grayLvl">#908686</color>
+    <color name="transparent">#908686</color>
+
+    <!-- Customize your light theme here. -->
+    <color name="primaryColorLight">#006684</color>
+    <color name="onPrimaryColorLight">#ffffff</color>
+    <color name="primaryContainerColorLight">#bde9ff</color>
+    <color name="onPrimaryContainerColorLight">#001f2a</color>
+
+    <!-- Customize your dark theme here. -->
+    <color name="primaryColorDark">#67d3ff</color>
+    <color name="onPrimaryColorDark">#003546</color>
+    <color name="primaryContainerColorDark">#004d64</color>
+    <color name="onPrimaryContainerColorDark">#bde9ff</color>
+
 </resources>

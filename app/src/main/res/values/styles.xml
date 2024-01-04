@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FABStyleExtended" parent="Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <item name="backgroundTint">@color/primaryContainerColorLight</item>
+        <item name="iconTint">@color/primaryColorLight</item>
+    </style>
+</resources>
