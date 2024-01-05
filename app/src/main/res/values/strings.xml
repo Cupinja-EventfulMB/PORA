@@ -9,6 +9,7 @@
     <string name="save">Save</string>
     <string name="save_button">Save Button</string>
     <string name="location">Location:</string>
+    <string name="category">Category</string>
 
 
 </resources>

@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        binding.messageButton.setOnClickListener {
+            val intent = Intent(this, MessageActivity::class.java)
+            startActivity(intent)
+        }
+
         // Exit application
         val exitButton = binding.exitBtn
         exitButton.setOnClickListener {
@@ -40,6 +45,4 @@ class MainActivity : AppCompatActivity() {
                     .create().show()
         }
     }
-
-
 }
