@@ -2,4 +2,13 @@
     <string name="app_name">EventfulMB</string>
     <string name="message_button">Message Button</string>
     <string name="message">Message</string>
+    <string name="simulation_button">Simulation Button</string>
+    <string name="simulation">Simulation</string>
+    <string name="floating_action_button">Floating Action Button</string>
+    <string name="update_frequency">Update frequency:</string>
+    <string name="save">Save</string>
+    <string name="save_button">Save Button</string>
+    <string name="location">Location:</string>
+
+
 </resources>

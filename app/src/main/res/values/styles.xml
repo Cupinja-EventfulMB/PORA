@@ -4,4 +4,5 @@
         <item name="backgroundTint">@color/primaryContainerColorLight</item>
         <item name="iconTint">@color/primaryColorLight</item>
     </style>
+
 </resources>
