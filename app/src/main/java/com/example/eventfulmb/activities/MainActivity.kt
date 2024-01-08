@@ -7,15 +7,26 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.eventfulmb.R
 import com.example.eventfulmb.databinding.ActivityMainBinding
+import com.example.eventfulmb.module.MqttHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val BROKER_URL = "tcp://127.0.0.1:1883"
+    private val CLIENT_ID = "client_id"
+    private var mqttHandler: MqttHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mqttHandler = MqttHandler(this)
+        mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
+
+        val topicToSubscribe = "your/topic"
+        subscribeToTopic(topicToSubscribe)
 
         binding.simulationActivityButton.setOnClickListener {
             val simulationIntent= Intent(this,SimulationActivity::class.java)
@@ -44,5 +55,20 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton("Yes"){ _,_ -> finish()}
                     .create().show()
         }
+    }
+
+    override fun onDestroy() {
+        mqttHandler!!.disconnect();
+        super.onDestroy()
+    }
+
+    private fun publishMessage(topic: String, message: String) {
+        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
+        mqttHandler!!.publish(topic, message)
+    }
+
+    private fun subscribeToTopic(topic: String) {
+        Toast.makeText(this, "Subscribing to topic $topic", Toast.LENGTH_SHORT).show()
+        mqttHandler!!.subscribe(topic)
     }
 }
