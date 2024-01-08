@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.distanceButton.setOnClickListener {
+            val intent = Intent(this, DistanceActivity::class.java)
+            startActivity(intent)
+        }
+
         // Exit application
         val exitButton = binding.exitBtn
         exitButton.setOnClickListener {

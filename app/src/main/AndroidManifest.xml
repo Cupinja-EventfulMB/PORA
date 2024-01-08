@@ -48,6 +48,9 @@
         <activity
             android:name=".activities.MessageActivity"
             android:exported="false"/>
+        <activity
+            android:name=".activities.DistanceActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
