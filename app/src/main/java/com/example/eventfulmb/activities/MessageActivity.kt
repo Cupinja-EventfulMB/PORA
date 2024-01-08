@@ -5,17 +5,26 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.eventfulmb.databinding.ActivityMessageBinding
 import com.example.eventfulmb.module.Message
+import com.example.eventfulmb.module.MqttHandler
 import com.google.android.gms.location.*
+import com.google.gson.Gson
 import java.time.LocalDateTime
+import com.google.gson.GsonBuilder
+import java.time.format.DateTimeFormatter
 
 class MessageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMessageBinding
+
+    private val BROKER_URL = "tcp://10.104.1.132:1883"
+    private val CLIENT_ID = "client_id"
+    private var mqttHandler: MqttHandler? = null
 
     // Location variables
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -30,6 +39,9 @@ class MessageActivity : AppCompatActivity() {
         binding.messageInput.setEndIconOnClickListener(View.OnClickListener {
             binding.messageInput.editText?.text = null
         })
+
+        mqttHandler = MqttHandler(this)
+        mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -48,6 +60,7 @@ class MessageActivity : AppCompatActivity() {
                 Log.d("MessageActivity", "Message body is empty. Cannot save.")
             }
         }
+
     }
 
 
@@ -61,12 +74,21 @@ class MessageActivity : AppCompatActivity() {
                     val message = Message(
                         body = messageBody,
                         category = messageCategory,
-                        time = LocalDateTime.now(),
+                        time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                         latitude = latitude,
                         longitude = longitude
                     )
 
+                    val gson: Gson = GsonBuilder().create()
+                    val jsonMessage: String = gson.toJson(message)
+
+                    // Publish the JSON message to the MQTT broker
+                    val topicToPublish = "send/message"
+                    publishMessage(topicToPublish, jsonMessage)
+
                     Log.d("MessageActivity", "Saved Message: $message")
+                    val topicToSubscribe = "send/message"
+                    publishMessage(topicToSubscribe, jsonMessage)
 
                     binding.messageInput.editText?.text = null
                     binding.menu.editText?.text = null
@@ -92,6 +114,9 @@ class MessageActivity : AppCompatActivity() {
         )
     }
 
-
+    private fun publishMessage(topic: String, message: String) {
+        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
+        mqttHandler!!.publish(topic, message)
+    }
 
 }
