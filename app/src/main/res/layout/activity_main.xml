@@ -27,14 +27,14 @@
         style="@style/FABStyleExtended"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="40dp"
         android:contentDescription="@string/simulation_button"
         android:text="@string/simulation"
         android:textColor="@color/primaryColorLight"
         app:icon="@drawable/baseline_list_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageButton"
         app:maxImageSize="30dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -42,15 +42,14 @@
         style="@style/FABStyleExtended"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="368dp"
+        android:layout_marginTop="40dp"
         android:contentDescription="Settings Button"
         android:text="Settings"
         android:textColor="@color/primaryColorLight"
         app:icon="@drawable/baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simulationActivityButton"
         app:maxImageSize="30dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -62,7 +61,6 @@
         android:contentDescription="@string/floating_action_button"
         android:onClick="onFabCamClick"
         android:src="@drawable/baseline_camera_24"
-        app:tint="@color/primaryColorLight"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +68,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961"
+        app:maxImageSize="30dp"
+        app:tint="@color/primaryColorLight" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/distanceButton"
+        style="@style/FABStyleExtended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/distance_button"
+        android:text="@string/distance"
+        android:textColor="@color/primaryColorLight"
+        app:icon="@drawable/baseline_add_alert_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsActivityButton"
         app:maxImageSize="30dp" />
 
     <ImageButton
