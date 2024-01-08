@@ -11,6 +11,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import java.io.Closeable
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 
 class MqttHandler(private val context: Context) : Closeable, MqttCallback {
 
@@ -62,8 +64,14 @@ class MqttHandler(private val context: Context) : Closeable, MqttCallback {
 
     override fun messageArrived(topic: String?, message: MqttMessage?) {
         val receivedMessage = message?.payload?.toString(Charsets.UTF_8)
-        receivedMessage?.let { Log.d("Message", it) }
-        Toast.makeText(context, "Received message: $receivedMessage", Toast.LENGTH_SHORT).show()
+        receivedMessage?.let {
+            Thread {
+                Log.d("Message", it)
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(context, "Received message: $receivedMessage", Toast.LENGTH_SHORT).show()
+                }
+            }.start()
+        }
     }
 
     override fun deliveryComplete(token: IMqttDeliveryToken?) {
@@ -73,6 +81,7 @@ class MqttHandler(private val context: Context) : Closeable, MqttCallback {
     override fun connectionLost(cause: Throwable?) {
         Log.d("MqttHandler", "Connection lost: ${cause?.message}")
     }
+
 
     override fun close() {
         disconnect()

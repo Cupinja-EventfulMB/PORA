@@ -12,7 +12,7 @@ import com.example.eventfulmb.module.MqttHandler
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val BROKER_URL = "tcp://127.0.0.1:1883"
+    private val BROKER_URL = "tcp://192.168.1.120:1883"
     private val CLIENT_ID = "client_id"
     private var mqttHandler: MqttHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
