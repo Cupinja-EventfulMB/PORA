@@ -10,6 +10,12 @@
     <string name="save_button">Save Button</string>
     <string name="location">Location:</string>
     <string name="category">Category</string>
+    <string name="set_hour">Set hours (0 - 23)</string>
+    <string name="set_minutes">Set minutes (0 - 59)</string>
+    <string name="set_seconds">Set seconds (0 - 59)</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
     <string name="distance_button">Distance Button</string>
     <string name="distance">Distance</string>
     <string name="meters">m</string>
