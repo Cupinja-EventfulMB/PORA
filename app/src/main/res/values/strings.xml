@@ -10,12 +10,22 @@
     <string name="save_button">Save Button</string>
     <string name="location">Location:</string>
     <string name="category">Category</string>
+    <string name="set_hour">Set hours (0 - 23)</string>
+    <string name="set_minutes">Set minutes (0 - 59)</string>
+    <string name="set_seconds">Set seconds (0 - 59)</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="start_capture">Start Capture</string>
+    <string name="stop_capture">Stop Capture</string>
+    <string name="flash_on">⚡</string>
+    <string name="flash_auto">A</string>
+    <string name="flash_off">⚡off</string>
+    <string name="rotate_camera">⟲</string>
     <string name="distance_button">Distance Button</string>
     <string name="distance">Distance</string>
     <string name="meters">m</string>
     <string name="nearby_institutions"><b>Nearby Institutions</b> in the radius of</string>
     <string name="enable">Enable</string>
-
-
-
 </resources>
