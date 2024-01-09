@@ -5,28 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.eventfulmb.MyApplication
 import com.example.eventfulmb.R
 import com.example.eventfulmb.databinding.ActivityMainBinding
 import com.example.eventfulmb.module.MqttHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var app: MyApplication
 
-    private val BROKER_URL = "tcp://192.168.1.120:1883"
-    private val CLIENT_ID = "client_id"
-    private var mqttHandler: MqttHandler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+       // setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mqttHandler = MqttHandler(this)
-        mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
+        app = application as MyApplication
 
         val topicToSubscribe = "your/topic"
-        subscribeToTopic(topicToSubscribe)
+        app.subscribeToTopic(topicToSubscribe)
 
         binding.simulationActivityButton.setOnClickListener {
             val simulationIntent= Intent(this,SimulationActivity::class.java)
@@ -64,17 +62,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mqttHandler!!.disconnect();
+        (application as MyApplication).disconnectMqtt()
         super.onDestroy()
     }
 
-    private fun publishMessage(topic: String, message: String) {
-        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
-        mqttHandler!!.publish(topic, message)
-    }
-
-    private fun subscribeToTopic(topic: String) {
-        Toast.makeText(this, "Subscribing to topic $topic", Toast.LENGTH_SHORT).show()
-        mqttHandler!!.subscribe(topic)
-    }
 }

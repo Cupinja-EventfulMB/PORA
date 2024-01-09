@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.eventfulmb.MyApplication
 import com.example.eventfulmb.databinding.ActivityMessageBinding
 import com.example.eventfulmb.module.Message
 import com.example.eventfulmb.module.MqttHandler
@@ -19,12 +20,8 @@ import com.google.gson.GsonBuilder
 import java.time.format.DateTimeFormatter
 
 class MessageActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMessageBinding
-
-    private val BROKER_URL = "tcp://10.104.1.132:1883"
-    private val CLIENT_ID = "client_id"
-    private var mqttHandler: MqttHandler? = null
+    private lateinit var app: MyApplication
 
     // Location variables
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -36,12 +33,12 @@ class MessageActivity : AppCompatActivity() {
         binding = ActivityMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        app = application as MyApplication
+
+
         binding.messageInput.setEndIconOnClickListener(View.OnClickListener {
             binding.messageInput.editText?.text = null
         })
-
-        mqttHandler = MqttHandler(this)
-        mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -82,13 +79,9 @@ class MessageActivity : AppCompatActivity() {
                     val gson: Gson = GsonBuilder().create()
                     val jsonMessage: String = gson.toJson(message)
 
-                    // Publish the JSON message to the MQTT broker
-                    val topicToPublish = "send/message"
-                    publishMessage(topicToPublish, jsonMessage)
-
                     Log.d("MessageActivity", "Saved Message: $message")
                     val topicToSubscribe = "send/message"
-                    publishMessage(topicToSubscribe, jsonMessage)
+                    app.publishMessage(topicToSubscribe, jsonMessage)
 
                     binding.messageInput.editText?.text = null
                     binding.menu.editText?.text = null
@@ -114,9 +107,12 @@ class MessageActivity : AppCompatActivity() {
         )
     }
 
-    private fun publishMessage(topic: String, message: String) {
-        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
-        mqttHandler!!.publish(topic, message)
+
+/*
+    override fun onDestroy() {
+        (application as MyApplication).disconnectMqtt()
+        super.onDestroy()
     }
+*/
 
 }
