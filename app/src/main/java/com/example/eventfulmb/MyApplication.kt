@@ -22,6 +22,11 @@ class MyApplication : Application() {
         mqttHandler!!.publish(topic, message)
     }
 
+    fun sendImage(topic: String, message: ByteArray) {
+        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
+        mqttHandler!!.send(topic, message)
+    }
+
     fun subscribeToTopic(topic: String) {
         Toast.makeText(this, "Subscribing to topic $topic", Toast.LENGTH_SHORT).show()
         mqttHandler!!.subscribe(topic)
