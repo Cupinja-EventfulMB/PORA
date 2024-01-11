@@ -54,6 +54,16 @@ class MqttHandler(private val context: Context) : Closeable, MqttCallback {
         }
     }
 
+    fun send(topic: String?, byteArray: ByteArray) {
+        try {
+            val mqttMessage = MqttMessage(byteArray)
+            client?.publish(topic, mqttMessage)
+        } catch (e: MqttException) {
+            e.printStackTrace()
+        }
+    }
+
+
     fun subscribe(topic: String?) {
         try {
             client?.subscribe(topic)

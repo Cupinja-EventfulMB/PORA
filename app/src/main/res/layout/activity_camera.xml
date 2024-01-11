@@ -10,15 +10,10 @@
         android:id="@+id/backBtn"
         android:layout_width="50dp"
         android:layout_height="31dp"
-        android:layout_marginBottom="195dp"
         android:background="#00000000"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24"
         app:tint="@color/primaryColorLight" />
 
@@ -80,6 +75,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.092"
         tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/openGallery"
+        style="@style/FABStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="595dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/open_gallery"
+        app:maxImageSize="35dp"
+        app:srcCompat="@drawable/baseline_insert_photo_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

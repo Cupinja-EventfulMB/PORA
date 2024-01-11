@@ -1,7 +1,9 @@
 package com.example.eventfulmb.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -51,6 +53,17 @@ class CameraActivity : AppCompatActivity() {
     private var flashMode = ImageCapture.FLASH_MODE_OFF
     private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { selectedImageUri ->
+                    val intent = Intent(this@CameraActivity, DisplayImageActivity::class.java)
+                    intent.putExtra("imageUri", selectedImageUri)
+                    startActivity(intent)
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
@@ -66,6 +79,7 @@ class CameraActivity : AppCompatActivity() {
        // viewBinding.videoCaptureButton.setOnClickListener { captureVideo() }
         binding.flashButton.setOnClickListener { changeFlashOnClick() }
         binding.rotateButton.setOnClickListener { rotateCamera() }
+        binding.openGallery.setOnClickListener { openGallery() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
         // Back Btn
@@ -101,15 +115,25 @@ class CameraActivity : AppCompatActivity() {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+
+                    // Open the DisplayImageActivity to show the captured image
+                    val intent = Intent(this@CameraActivity, DisplayImageActivity::class.java)
+                    intent.putExtra("imageUri", output.savedUri)
+                    startActivity(intent)
                 }
             }
         )
     }
+
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryLauncher.launch(galleryIntent)
+    }
+
 
     private fun captureVideo() {
         val videoCapture = this.videoCapture ?: return

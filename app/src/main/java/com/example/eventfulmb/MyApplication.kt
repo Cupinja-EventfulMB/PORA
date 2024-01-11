@@ -6,7 +6,7 @@ import com.example.eventfulmb.module.MqttHandler
 
 class MyApplication : Application() {
 
-    private val BROKER_URL = "tcp://164.8.39.124:1883"
+    private val BROKER_URL = "tcp://192.168.1.220:1883"
     private val CLIENT_ID = "client_id"
     private var mqttHandler: MqttHandler? = null
 
@@ -20,6 +20,11 @@ class MyApplication : Application() {
     fun publishMessage(topic: String, message: String) {
         Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
         mqttHandler!!.publish(topic, message)
+    }
+
+    fun sendImage(topic: String, message: ByteArray) {
+        Toast.makeText(this, "Publishing message: $message", Toast.LENGTH_SHORT).show()
+        mqttHandler!!.send(topic, message)
     }
 
     fun subscribeToTopic(topic: String) {
