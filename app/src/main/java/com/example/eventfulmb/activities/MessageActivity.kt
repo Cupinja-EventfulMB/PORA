@@ -25,7 +25,7 @@ class MessageActivity : AppCompatActivity() {
 
     // Location variables
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val locationPermissionCode = 42 // You can choose any code
+    private val locationPermissionCode = 42
     private lateinit var locationRequest: LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
