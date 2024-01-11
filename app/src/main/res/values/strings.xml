@@ -28,4 +28,6 @@
     <string name="meters">m</string>
     <string name="nearby_institutions"><b>Nearby Institutions</b> in the radius of</string>
     <string name="enable">Enable</string>
+    <string name="send">Send</string>
+    <string name="send_button">Send Button</string>
 </resources>

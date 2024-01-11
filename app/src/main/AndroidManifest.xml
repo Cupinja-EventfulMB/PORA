@@ -60,6 +60,9 @@
         <activity
             android:name=".activities.DistanceActivity"
             android:exported="false"/>
+        <activity
+            android:name=".activities.DisplayImageActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

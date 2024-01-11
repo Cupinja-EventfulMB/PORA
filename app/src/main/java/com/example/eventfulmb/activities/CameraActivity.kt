@@ -2,6 +2,7 @@ package com.example.eventfulmb.activities
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -101,11 +102,15 @@ class CameraActivity : AppCompatActivity() {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+
+                    // Open the DisplayImageActivity to show the captured image
+                    val intent = Intent(this@CameraActivity, DisplayImageActivity::class.java)
+                    intent.putExtra("imageUri", output.savedUri)
+                    startActivity(intent)
                 }
             }
         )
