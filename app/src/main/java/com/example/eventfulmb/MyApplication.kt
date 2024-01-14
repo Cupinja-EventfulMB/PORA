@@ -6,13 +6,12 @@ import com.example.eventfulmb.module.MqttHandler
 
 class MyApplication : Application() {
 
-    private val BROKER_URL = "tcp://192.168.1.220:1883"
+    private val BROKER_URL = "tcp://192.168.1.120:1883"
     private val CLIENT_ID = "client_id"
-    private var mqttHandler: MqttHandler? = null
+    public var mqttHandler: MqttHandler? = null
 
     override fun onCreate() {
         super.onCreate()
-
         mqttHandler = MqttHandler(this)
         mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
     }

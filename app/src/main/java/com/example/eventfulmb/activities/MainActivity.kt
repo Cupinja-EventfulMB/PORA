@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         app = application as MyApplication
 
-        val topicToSubscribe = "your/topic"
+        val topicToSubscribe = "people/detection"
         app.subscribeToTopic(topicToSubscribe)
 
         binding.simulationActivityButton.setOnClickListener {
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Exit application
         val exitButton = binding.exitBtn
         exitButton.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Do you want to exit the application?")

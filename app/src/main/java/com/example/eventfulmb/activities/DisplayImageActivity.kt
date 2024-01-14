@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ import com.example.eventfulmb.MyApplication
 import com.example.eventfulmb.databinding.ActivityDisplayImageBinding
 import com.example.eventfulmb.module.Image
 import com.example.eventfulmb.module.Message
+import com.example.eventfulmb.module.MqttHandler
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -41,6 +43,10 @@ class DisplayImageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         app = application as MyApplication
+
+        app.mqttHandler?.changeContext(this)
+
+        app.subscribeToTopic("people/detection")
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -89,7 +95,7 @@ class DisplayImageActivity : AppCompatActivity() {
 
                     val topicToSubscribe = "send/image"
                     app.publishMessage(topicToSubscribe, jsonMessage)
-
+                    Log.d("Context inside", this.toString())
                 }
         } else {
             requestLocationPermission()
