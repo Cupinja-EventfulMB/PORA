@@ -48,7 +48,11 @@ dependencies {
     implementation ("androidx.camera:camera-video:${camerax_version}")
     implementation ("androidx.camera:camera-view:${camerax_version}")
     implementation ("androidx.camera:camera-extensions:${camerax_version}")
-
+    // Recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0") // For control over item selection of both touch and mouse driven selection
+    // Map
+    implementation("org.osmdroid:osmdroid-android:6.1.17")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.FABSimulationActivity">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/menu"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="373dp"
+        android:layout_height="61dp"
+        android:hint="@string/category"
+        app:boxStrokeColor="@color/primaryColorLight"
+        app:endIconTint="@color/primaryColorLight"
+        app:hintTextColor="@color/primaryColorLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036"
+        tools:ignore="MissingConstraints">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:inputType="none"
+            app:simpleItemSelectedColor="@color/primaryContainerColorLight"
+            app:simpleItemSelectedRippleColor="@color/primaryContainerColorLight"
+            app:simpleItems="@array/categoriesSimulation" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtViewHour"
+        android:layout_width="119dp"
+        android:layout_height="24dp"
+
+        android:text="@string/set_hour"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderHour"
+        android:layout_width="382dp"
+        android:layout_height="23dp"
+        android:layout_marginBottom="564dp"
+        android:stepSize="1.0"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="23.0"
+        app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewHour"
+        app:thumbColor="@color/primaryColorDark"
+        app:tickColorActive="@color/primaryColorLight"
+        app:tickColorInactive="@color/onPrimaryColorDark"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_minutes"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.244" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderMinutes"
+        android:layout_width="382dp"
+        android:layout_height="23dp"
+        android:stepSize="1.0"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="59.0"
+        app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toBottomOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewMinutes"
+        app:layout_constraintVertical_bias="0.016"
+        app:thumbColor="@color/primaryColorDark"
+        app:tickColorActive="@color/primaryColorLight"
+        app:tickColorInactive="@color/onPrimaryColorDark"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewSeconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_seconds"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.364" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderSeconds"
+        android:layout_width="382dp"
+        android:layout_height="23dp"
+        android:stepSize="1.0"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="59.0"
+        app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewSeconds"
+        app:layout_constraintVertical_bias="0.0"
+        app:thumbColor="@color/primaryColorDark"
+        app:tickColorActive="@color/primaryColorLight"
+        app:tickColorInactive="@color/onPrimaryColorDark"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewS"
+        android:layout_width="86dp"
+        android:layout_height="31dp"
+        android:text="@string/seconds"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewM"
+        android:layout_width="86dp"
+        android:layout_height="32dp"
+        android:text="@string/minutes"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewH"
+        android:layout_width="76dp"
+        android:layout_height="31dp"
+        android:text="@string/hours"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        tilesource="Mapnik"
+        android:layout_width="378dp"
+        android:layout_height="202dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapText"
+        app:layout_constraintVertical_bias="0.379" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/saveButton"
+        style="@style/FABStyleExtended"
+        android:layout_width="123dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/save_button"
+        android:text="@string/save"
+        android:textColor="@color/primaryColorLight"
+        app:icon="@drawable/baseline_save_alt_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map"
+        app:layout_constraintVertical_bias="1.0"
+        app:maxImageSize="30dp" />
+
+    <EditText
+        android:id="@+id/mapText"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/enter_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.593" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
