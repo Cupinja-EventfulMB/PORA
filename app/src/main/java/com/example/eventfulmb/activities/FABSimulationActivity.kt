@@ -127,9 +127,37 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
 
     }
 
+    private fun createMarkerAtLocation(geoPoint: GeoPoint, locationName: String? = null) {
+        val marker = Marker(map)
+        marker.position = geoPoint
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        val drawable = ContextCompat.getDrawable(this@FABSimulationActivity, R.drawable.marker)
+        marker.icon = drawable
+        marker.title = locationName ?: getString(R.string.default_location)
+
+        tapOverlay.setLastMarker(marker, map)
+    }
+
     override fun onMapTapped(geoPoint: GeoPoint) {
         Log.i("FABSimulationActivity", "Map tapped at: Latitude: ${geoPoint.latitude}, Longitude: ${geoPoint.longitude}")
 
+        createMarkerAtLocation(geoPoint)
+
+        val addresses: MutableList<Address>? = geocoder.getFromLocation(geoPoint.latitude, geoPoint.longitude, 1)
+        if (addresses != null) {
+            if (addresses.isNotEmpty()) {
+                val address: Address = addresses[0]
+                val addressFragments = with(address) {
+                    (0..maxAddressLineIndex).map { getAddressLine(it) }
+                }
+
+                runOnUiThread {
+                    locationSearchView.setText(addressFragments.joinToString(separator = "\n"))
+                }
+            } else {
+                Log.w("FABSimulationActivity", "No address found at tapped location.")
+            }
+        }
     }
 
     private fun updateRangeText(selectedCategory: String) {
@@ -179,14 +207,7 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
                             mapController.setCenter(geoPoint)
                             mapController.setZoom(15.0)
 
-                            val marker = Marker(map)
-                            marker.position = geoPoint
-                            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            val drawable = ContextCompat.getDrawable(this@FABSimulationActivity, R.drawable.marker)
-                            marker.icon = drawable
-                            marker.title = locationName
-
-                            tapOverlay.setLastMarker(marker, map)
+                            createMarkerAtLocation(geoPoint, locationName)
                         }
                     } else {
                         runOnUiThread {
