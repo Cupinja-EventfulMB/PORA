@@ -10,8 +10,10 @@ import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import com.example.eventfulmb.module.MapTapOverlay
+import android.util.Log
 
-class FABSimulationActivity : AppCompatActivity() {
+class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListener {
     private lateinit var binding: ActivityFabsimulationBinding
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var map: MapView
@@ -19,7 +21,6 @@ class FABSimulationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize binding before setting the content view
         binding = ActivityFabsimulationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,11 +29,13 @@ class FABSimulationActivity : AppCompatActivity() {
         map.setMultiTouchControls(true)
         map.setUseDataConnection(true)
         mapController = map.controller
-        // Center the map
+
         val mariborCoordinates = GeoPoint(46.5547, 15.6459)
         mapController.setCenter(mariborCoordinates)
         mapController.setZoom(15.0)
 
+        val tapOverlay = MapTapOverlay(this)
+        map.overlays.add(tapOverlay)
 
         // binding.mapText. todo
 
@@ -70,6 +73,10 @@ class FABSimulationActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onMapTapped(geoPoint: GeoPoint) {
+        Log.i("FABSimulationActivity", "Map tapped at: Latitude: ${geoPoint.latitude}, Longitude: ${geoPoint.longitude}")
 
     }
 }
