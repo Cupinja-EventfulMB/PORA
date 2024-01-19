@@ -82,7 +82,7 @@ class MqttHandler(private var context: Context) : Closeable, MqttCallback {
             Log.d("MqttHandler", "Received message: $it")
             Log.d("Context mqtt", context.toString())
             Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "Received message: $it", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, " $it", Toast.LENGTH_SHORT).show()
             }
         }
     }
