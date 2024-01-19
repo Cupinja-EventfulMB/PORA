@@ -7,6 +7,31 @@
     tools:context=".activities.FABSimulationActivity">
 
 
+    <EditText
+        android:id="@+id/insertMinVal"
+        android:layout_width="60dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/mapText"
+        app:layout_constraintStart_toEndOf="@+id/txtInsertRange"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewM" />
+
+    <TextView
+        android:id="@+id/txtInsertRange"
+        android:layout_width="202dp"
+        android:layout_height="31dp"
+        android:text="@string/insert_range"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/mapText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewM" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/menu"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -36,7 +61,7 @@
     <TextView
         android:id="@+id/txtViewHour"
         android:layout_width="119dp"
-        android:layout_height="24dp"
+        android:layout_height="20dp"
 
         android:text="@string/set_hour"
         android:textSize="15sp"
@@ -69,16 +94,16 @@
 
     <TextView
         android:id="@+id/txtViewMinutes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="132dp"
+        android:layout_height="21dp"
         android:text="@string/set_minutes"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.229" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderMinutes"
@@ -91,10 +116,10 @@
         app:haloColor="#6F67D3FF"
         app:layout_constraintBottom_toBottomOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewMinutes"
-        app:layout_constraintVertical_bias="0.016"
+        app:layout_constraintVertical_bias="0.0"
         app:thumbColor="@color/primaryColorDark"
         app:tickColorActive="@color/primaryColorLight"
         app:tickColorInactive="@color/onPrimaryColorDark"
@@ -108,10 +133,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364" />
+        app:layout_constraintVertical_bias="0.326" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderSeconds"
@@ -135,43 +160,49 @@
 
     <TextView
         android:id="@+id/txtViewS"
-        android:layout_width="86dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="77dp"
+        android:layout_height="21dp"
         android:text="@string/seconds"
+        android:textAlignment="center"
         android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.769"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txtViewM"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.422" />
 
     <TextView
         android:id="@+id/txtViewM"
-        android:layout_width="86dp"
-        android:layout_height="32dp"
+        android:layout_width="78dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="10dp"
         android:text="@string/minutes"
+        android:textAlignment="center"
         android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
 
     <TextView
         android:id="@+id/txtViewH"
-        android:layout_width="76dp"
-        android:layout_height="31dp"
+        android:layout_width="66dp"
+        android:layout_height="20dp"
         android:text="@string/hours"
+        android:textAlignment="center"
         android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.315"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
 
     <org.osmdroid.views.MapView
         android:id="@+id/map"
@@ -203,16 +234,17 @@
         app:layout_constraintVertical_bias="1.0"
         app:maxImageSize="30dp" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/mapText"
-        android:layout_width="0dp"
-        android:layout_height="43dp"
+        android:layout_width="384dp"
+        android:layout_height="38dp"
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="12dp"
         android:ems="10"
         android:hint="@string/enter_location"
         android:inputType="text"
+        android:imeOptions="actionSearch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -230,5 +262,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961" />
+
+    <EditText
+        android:id="@+id/insertMaxVal"
+        android:layout_width="60dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/mapText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewM" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="21dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="--"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/mapText"
+        app:layout_constraintEnd_toStartOf="@+id/insertMaxVal"
+        app:layout_constraintStart_toEndOf="@+id/insertMinVal"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0") // For control over item selection of both touch and mouse driven selection
     // Map
     implementation("org.osmdroid:osmdroid-android:6.1.18")
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
