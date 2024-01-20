@@ -3,7 +3,6 @@ package com.example.eventfulmb.activities
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import com.example.eventfulmb.R
 import com.example.eventfulmb.databinding.ActivityFabsimulationBinding
@@ -26,10 +25,15 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONArray
-import org.json.JSONObject
 import java.io.IOException
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import org.json.JSONObject
+import com.example.eventfulmb.module.SensorData
+import android.os.Environment
+import com.example.eventfulmb.MyApplication
+import java.io.File
+import java.io.FileWriter
 
 class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListener {
     private lateinit var binding: ActivityFabsimulationBinding
@@ -40,6 +44,8 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
     private lateinit var geocoder: Geocoder
     private lateinit var locationMarker: Marker
     private lateinit var tapOverlay: MapTapOverlay
+    private lateinit var app: MyApplication
+    private var sensorDataList = mutableListOf<SensorData>()
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +53,9 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
 
         binding = ActivityFabsimulationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app = application as MyApplication
+        sensorDataList = app.sensorData
 
         map = binding.map
         map.setTileSource(TileSourceFactory.MAPNIK)
@@ -62,8 +71,6 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
 
         tapOverlay = MapTapOverlay(this)
         map.overlays.add(tapOverlay)
-
-        // binding.mapText. todo
 
         geocoder = Geocoder(this)
 
@@ -112,16 +119,44 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
         }
 
         binding.saveButton.setOnClickListener {
-            val isInvalidValues =
-                hourTextView.text == "Hours" || minuteTextView.text == "Minutes" || secondTextView.text == "Seconds"
+            val selectedCategory = categoryMenu?.text.toString()
+            val selectedHour = hourSlider.value.toInt()
+            val selectedMinute = minuteSlider.value.toInt()
+            val selectedSecond = secondSlider.value.toInt()
+            val locationName = locationSearchView.text.toString()
 
-            if (isInvalidValues) {
-                Toast.makeText(this, "Change all values", Toast.LENGTH_SHORT).show()
+            val minValueField = binding.insertMinVal.text.toString()
+            val minValue = minValueField.toIntOrNull() ?: 0
+
+            val maxValueField = binding.insertMaxVal.text.toString()
+            val maxValue = maxValueField.toIntOrNull() ?: 0
+
+            val lastMarkerPosition = tapOverlay.getLastMarker()?.position
+            val latitude = lastMarkerPosition?.latitude ?: 0.0
+            val longitude = lastMarkerPosition?.longitude ?: 0.0
+
+            val subscribed = binding.switch1.isChecked
+
+            if (selectedCategory.isNotBlank() && minValueField.isNotBlank() && maxValueField.isNotBlank() && locationName.isNotBlank() && lastMarkerPosition != null) {
+                val sensorData = SensorData(
+                    category = selectedCategory,
+                    minVal = minValue,
+                    maxVal = maxValue,
+                    hour = selectedHour,
+                    minutes = selectedMinute,
+                    seconds = selectedSecond,
+                    location = locationName,
+                    latitude = latitude,
+                    longitude = longitude,
+                    subscribed = subscribed
+                )
+
+                sensorDataList.add(sensorData)
+                saveSensorDataToJsonFile()
+                Toast.makeText(this, "Data Saved: $sensorData", Toast.LENGTH_SHORT).show()
+                Log.d("Saved sensor data", "$sensorData");
             } else {
-                val selectedHour = hourSlider.value.toInt()
-                val selectedMinute = minuteSlider.value.toInt()
-                val selectedSecond = secondSlider.value.toInt()
-                Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -164,7 +199,7 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
         val rangeText = when (selectedCategory) {
             "People" -> getString(R.string.people_range)
             "Temperature" -> getString(R.string.temperature_range)
-            else -> getString(R.string.default_category)  // default placeholder for category
+            else -> getString(R.string.default_category)
         }
         binding.txtInsertRange.text = getString(R.string.insert_range, rangeText)
     }
@@ -217,5 +252,40 @@ class FABSimulationActivity : AppCompatActivity(), MapTapOverlay.OnMapTapListene
                 }
             }
         })
+    }
+
+    private fun saveSensorDataToJsonFile() {
+        val jsonArray = JSONArray()
+        sensorDataList.forEach { data ->
+            val jsonObject = JSONObject()
+            jsonObject.put("category", data.category)
+            jsonObject.put("lastUpdate", data.lastUpdate)
+            jsonObject.put("hour", data.hour)
+            jsonObject.put("minutes", data.minutes)
+            jsonObject.put("seconds", data.seconds)
+            jsonObject.put("minVal", data.minVal)
+            jsonObject.put("maxVal", data.maxVal)
+            jsonObject.put("location", data.location)
+            jsonObject.put("latitude", data.latitude)
+            jsonObject.put("longitude", data.longitude)
+            jsonObject.put("subscribed", data.subscribed)
+            jsonArray.put(jsonObject)
+        }
+
+        try {
+            if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+                val file = File(getExternalFilesDir(null), "SensorData.json")
+                FileWriter(file).use {
+                    it.write(jsonArray.toString(4)) // Use 4 for pretty print
+                }
+                Toast.makeText(this, "Data saved to ${file.absolutePath}", Toast.LENGTH_LONG).show()
+                Log.d("Data saved", "${file.absolutePath}")
+            } else {
+                Toast.makeText(this, "Cannot write to external storage", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to save data", Toast.LENGTH_SHORT).show()
+        }
     }
 }

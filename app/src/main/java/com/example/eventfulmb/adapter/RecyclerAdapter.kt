@@ -1,65 +1,43 @@
 package com.example.eventfulmb.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eventfulmb.R
-import com.example.eventfulmb.databinding.ActivitySimulationBinding
+import com.example.eventfulmb.module.SensorData
 import com.example.eventfulmb.databinding.CardLayoutBinding
 
-
-// todo model za simulaciite class RecyclerAdapter(private val data: List<Simulations>,private val binding: CardLayoutBinding) :
-class RecyclerAdapter(private val binding: CardLayoutBinding) :
-
+class RecyclerAdapter(private val sensorDataList: List<SensorData>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
-        return ViewHolder(view, binding)
+        val binding = CardLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val simulation = data[position]
-//        holder.itemTitle = simulation.title
-//        holder.itemRangeText = simulation.range
-//        holder.itemLocationText = simulation.location
-//
-//        holder.itemView.setOnClickListener{
-//            // todo
-//        }
+        val sensorData = sensorDataList[position]
+        holder.bind(sensorData)
     }
 
+    override fun getItemCount(): Int = sensorDataList.size
 
-    fun updateData() {
+    class ViewHolder(private val binding: CardLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    }
+        fun bind(sensorData: SensorData) {
+            binding.itemTitle.text = sensorData.category
+            binding.itemRangeText.text = "Range: ${sensorData.minVal} - ${sensorData.maxVal}"
+            binding.itemLocationText.text = sensorData.location
+            binding.itemHourText.text = "Update interval: ${sensorData.hour}:${sensorData.minutes}:${sensorData.seconds}"
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented") //return data.size
-    }
+            // Set images if needed, for example:
+            // binding.itemRangeImage.setImageResource(R.drawable.your_image_resource)
 
-    inner class ViewHolder(itemView: View, binding: CardLayoutBinding) :
-        RecyclerView.ViewHolder(itemView) {
-        var itemTitle: TextView
-        var itemRangeImage: ImageView
-        var itemRangeText: TextView
-        var itemHourImage: ImageView
-        var itemHourText: TextView
-        var itemLocationImage: ImageView
-        var itemLocationText: TextView
-
-        init {
-            itemTitle = itemView.findViewById(binding.itemTitle.id)
-            itemRangeImage = itemView.findViewById(binding.itemRangeImage.id)
-            itemRangeText = itemView.findViewById(binding.itemRangeText.id)
-            itemHourImage = itemView.findViewById(binding.itemHourImage.id)
-            itemHourText = itemView.findViewById(binding.itemRangeText.id)
-            itemLocationImage = itemView.findViewById(binding.itemHourImage.id)
-            itemLocationText = itemView.findViewById(binding.itemRangeText.id)
+            // Handle item click if needed
+            itemView.setOnClickListener {
+                // TODO: Handle the item click event
+            }
         }
     }
 }
-
-

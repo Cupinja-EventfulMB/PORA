@@ -51,6 +51,10 @@ class MapTapOverlay(private val onMapTapListener: OnMapTapListener) : Overlay() 
         mapView.invalidate()
     }
 
+    fun getLastMarker(): Marker? {
+        return lastMarker;
+    }
+
 }
 
 
