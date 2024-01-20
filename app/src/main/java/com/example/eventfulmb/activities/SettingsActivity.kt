@@ -144,4 +144,3 @@ class SettingsActivity: AppCompatActivity() {
     }
 
 }
-// todo gresno uuid dobivam(gresno message strukturo na server) i se updateira sato odma posle save button (lokalno)

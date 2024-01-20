@@ -10,10 +10,13 @@
         android:id="@+id/backBtn"
         android:layout_width="50dp"
         android:layout_height="31dp"
+        android:layout_marginStart="4dp"
         android:background="#00000000"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011"
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24"
         app:tint="@color/primaryColorLight" />
 

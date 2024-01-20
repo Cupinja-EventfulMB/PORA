@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.fabCamera.setOnClickListener{
             val cameraIntent = Intent(this,CameraActivity::class.java)
-            Toast.makeText(this, "Camera button clicked!", Toast.LENGTH_SHORT).show()
             startActivity(cameraIntent)
         }
 
