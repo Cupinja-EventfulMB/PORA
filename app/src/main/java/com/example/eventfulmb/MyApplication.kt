@@ -19,6 +19,9 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Random
+import android.content.Context
+import android.util.Log
+import java.util.UUID
 
 class MyApplication : Application() {
 
@@ -31,6 +34,20 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val sharedPreferences = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        val UUID_KEY = "UUID" 
+
+        val uuid = sharedPreferences.getString(UUID_KEY, null)
+
+        if (uuid.isNullOrEmpty()) {
+            val newUuid = UUID.randomUUID().toString()
+            sharedPreferences.edit().putString(UUID_KEY, newUuid).apply()
+            Log.d("UUID", "Successfully created UUID: $newUuid")
+        } else {
+            Log.d("UUID", "Existing UUID: $uuid")
+        }
+
         mqttHandler = MqttHandler(this)
         mqttHandler!!.connect(BROKER_URL, CLIENT_ID)
         val osmConfig = Configuration.getInstance()
