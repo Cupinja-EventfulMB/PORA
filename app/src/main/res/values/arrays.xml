@@ -5,4 +5,8 @@
         <item>Info</item>
         <item>Opinions</item>
     </array>
+    <array name="categoriesSimulation">
+        <item>People</item>
+        <item>Temperature</item>
+    </array>
 </resources>
