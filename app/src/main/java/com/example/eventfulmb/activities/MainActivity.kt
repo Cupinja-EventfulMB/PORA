@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.eventfulmb.MyApplication
-import com.example.eventfulmb.R
 import com.example.eventfulmb.databinding.ActivityMainBinding
-import com.example.eventfulmb.module.MqttHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
