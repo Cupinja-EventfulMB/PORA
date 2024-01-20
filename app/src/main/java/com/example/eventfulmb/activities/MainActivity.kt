@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.eventfulmb.MyApplication
-import com.example.eventfulmb.R
 import com.example.eventfulmb.databinding.ActivityMainBinding
-import com.example.eventfulmb.module.MqttHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.fabCamera.setOnClickListener{
             val cameraIntent = Intent(this,CameraActivity::class.java)
-            Toast.makeText(this, "Camera button clicked!", Toast.LENGTH_SHORT).show()
             startActivity(cameraIntent)
         }
 

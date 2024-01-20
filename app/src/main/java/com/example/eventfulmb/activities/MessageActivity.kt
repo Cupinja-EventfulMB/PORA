@@ -57,9 +57,12 @@ class MessageActivity : AppCompatActivity() {
                 Log.d("MessageActivity", "Message body is empty. Cannot save.")
             }
         }
+        // Back Btn
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
     }
-
 
     private fun saveMessageWithLocation(messageBody: String, messageCategory: String) {
         if (checkLocationPermission()) {
