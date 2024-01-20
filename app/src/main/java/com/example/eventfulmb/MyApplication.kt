@@ -70,6 +70,10 @@ class MyApplication : Application() {
         mqttHandler!!.subscribe(topic)
     }
 
+    fun unsubscribeFromTopic(topic: String) {
+        mqttHandler!!.unsubscribe(topic)
+    }
+
     fun disconnectMqtt() {
         mqttHandler?.disconnect()
     }
