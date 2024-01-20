@@ -20,4 +20,8 @@ class SensorData (
     override fun toString(): String {
         return "SensorData(category-'$category', time='$lastUpdate', interval='$hour:$minutes:$seconds', 'minVal'='$minVal', 'maxVal'='$maxVal', 'location'='$location', 'latitude='$latitude', longitude='$longitude', subscribed='$subscribed')"
     }
+
+    fun updateLastUpdateTime() {
+        lastUpdate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    }
 }

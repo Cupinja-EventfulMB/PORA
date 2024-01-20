@@ -31,10 +31,7 @@ class RecyclerAdapter(private val sensorDataList: List<SensorData>) :
             binding.itemLocationText.text = sensorData.location
             binding.itemHourText.text = "Update interval: ${sensorData.hour}:${sensorData.minutes}:${sensorData.seconds}"
 
-            // Set images if needed, for example:
-            // binding.itemRangeImage.setImageResource(R.drawable.your_image_resource)
-
-            // Handle item click if needed
+            binding.switchBtn.isChecked = sensorData.subscribed
             itemView.setOnClickListener {
                 // TODO: Handle the item click event
             }

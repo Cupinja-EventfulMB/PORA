@@ -1,15 +1,24 @@
 package com.example.eventfulmb
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import com.example.eventfulmb.module.MqttHandler
 import com.example.eventfulmb.module.SensorData
+import com.example.eventfulmb.module.SensorGeneratedData
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.eclipse.paho.android.service.BuildConfig
 import org.json.JSONArray
 import org.osmdroid.config.Configuration
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Random
 
 class MyApplication : Application() {
 
@@ -17,7 +26,8 @@ class MyApplication : Application() {
     private val CLIENT_ID = "client_id"
     public var mqttHandler: MqttHandler? = null
     val sensorData = mutableListOf<SensorData>()
-    private var sensorDataList = mutableListOf<SensorData>()
+    private val handler = Handler(Looper.getMainLooper())
+    private val CHECK_INTERVAL: Long = 1000
 
     override fun onCreate() {
         super.onCreate()
@@ -26,6 +36,7 @@ class MyApplication : Application() {
         val osmConfig = Configuration.getInstance()
         osmConfig.userAgentValue = BuildConfig.APPLICATION_ID
         loadSensorDataFromFile()
+        handler.post(checkSensorsTask);
     }
 
     fun publishMessage(topic: String, message: String) {
@@ -39,7 +50,6 @@ class MyApplication : Application() {
     }
 
     fun subscribeToTopic(topic: String) {
-        Toast.makeText(this, "Subscribing to topic $topic", Toast.LENGTH_SHORT).show()
         mqttHandler!!.subscribe(topic)
     }
 
@@ -83,4 +93,48 @@ class MyApplication : Application() {
             Toast.makeText(this, "Error parsing sensor data", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+    private val checkSensorsTask: Runnable = object : Runnable {
+        override fun run() {
+            checkAndUpdateSensors()
+            handler.postDelayed(this, CHECK_INTERVAL)
+        }
+    }
+
+    private fun checkAndUpdateSensors() {
+        val now = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+        for (sensor in sensorData) {
+            val lastUpdateDateTime = LocalDateTime.parse(sensor.lastUpdate, formatter)
+            val duration = Duration.between(lastUpdateDateTime, now)
+
+            val hoursDiff = duration.toHours()
+            val minutesDiff = duration.toMinutes() % 60
+            val secondsDiff = duration.seconds % 60
+
+            if (hoursDiff >= sensor.hour && minutesDiff >= sensor.minutes && secondsDiff >= sensor.seconds) {
+                val generatedData = generateSensorData(sensor)
+                val gson: Gson = GsonBuilder().create()
+                val jsonMessage: String = gson.toJson(generatedData)
+                publishMessage("send/sensor", jsonMessage)
+                sensor.updateLastUpdateTime()
+            }
+        }
+    }
+
+    private fun generateSensorData(sensor: SensorData): SensorGeneratedData {
+        val random = Random()
+        val value: Int = sensor.minVal + random.nextInt(sensor.maxVal - sensor.minVal + 1)
+        return SensorGeneratedData(
+            sensor.category,
+            value,
+            sensor.location,
+            sensor.latitude,
+            sensor.longitude,
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        )
+    }
+
 }
