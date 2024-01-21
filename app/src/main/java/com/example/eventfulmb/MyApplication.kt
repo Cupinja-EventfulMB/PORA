@@ -135,7 +135,7 @@ class MyApplication : Application() {
             val minutesDiff = duration.toMinutes() % 60
             val secondsDiff = duration.seconds % 60
 
-            if (hoursDiff >= sensor.hour && minutesDiff >= sensor.minutes && secondsDiff >= sensor.seconds) {
+            if (hoursDiff >= sensor.hour && minutesDiff >= sensor.minutes && secondsDiff >= sensor.seconds && sensor.subscribed) {
                 val generatedData = generateSensorData(sensor)
                 val gson: Gson = GsonBuilder().create()
                 val jsonMessage: String = gson.toJson(generatedData)
