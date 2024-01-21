@@ -19,65 +19,14 @@
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24"
         app:tint="@color/primaryColorLight" />
 
-    <TextView
-        android:id="@+id/distanceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:text="@string/nearby_institutions"
-        android:textSize="18sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/radiusInput"
-        android:layout_width="126dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/distanceText" />
-
-    <TextView
-        android:id="@+id/metersLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/meters"
-        app:layout_constraintBottom_toBottomOf="@+id/radiusInput"
-        app:layout_constraintStart_toEndOf="@+id/radiusInput"
-        app:layout_constraintTop_toTopOf="@+id/radiusInput" />
-
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/enableSwitch"
-        android:layout_width="112dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="76dp"
-        android:checked="true"
-        android:text="@string/enable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radiusInput"
-        app:trackTint="@color/primaryColorLight"
-        app:thumbTint="@color/white"/>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/saveButton"
-        style="@style/FABStyleExtended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:contentDescription="@string/save_button"
-        android:text="@string/save"
-        android:textColor="@color/primaryColorLight"
-        app:icon="@drawable/baseline_save_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enableSwitch"
-        app:maxImageSize="30dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

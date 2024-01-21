@@ -76,6 +76,14 @@ class MqttHandler(private var context: Context) : Closeable, MqttCallback {
         }
     }
 
+    fun unsubscribe(topic: String?) {
+        try {
+            client?.unsubscribe(topic)
+        } catch (e: MqttException) {
+            e.printStackTrace()
+        }
+    }
+
     override fun messageArrived(topic: String?, message: MqttMessage?) {
         val receivedMessage = message?.payload?.toString(Charsets.UTF_8)
         receivedMessage?.let {
