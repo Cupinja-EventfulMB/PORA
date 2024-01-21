@@ -25,7 +25,7 @@ import java.util.UUID
 
 class MyApplication : Application() {
 
-    private val BROKER_URL = "tcp://192.168.0.102:1883"
+    private val BROKER_URL = "tcp://192.168.0.100:1883"
     private val CLIENT_ID = "client_id"
     public var mqttHandler: MqttHandler? = null
     val sensorData = mutableListOf<SensorData>()
@@ -36,7 +36,7 @@ class MyApplication : Application() {
         super.onCreate()
         val sharedPreferences = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
-        val UUID_KEY = "UUID" 
+        val UUID_KEY = "UUID"
 
         val uuid = sharedPreferences.getString(UUID_KEY, null)
 
@@ -157,5 +157,19 @@ class MyApplication : Application() {
             LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         )
     }
+
+    fun saveSensorDataToFile() {
+        try {
+            val file = File(getExternalFilesDir(null), "SensorData.json")
+            val gson: Gson = GsonBuilder().create()
+            val jsonContent: String = gson.toJson(sensorData)
+            file.writeText(jsonContent, Charset.defaultCharset())
+            Toast.makeText(this, "Saved sensor data to file.", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to save sensor data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 }

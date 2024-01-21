@@ -13,6 +13,7 @@ import com.example.eventfulmb.databinding.ActivitySimulationBinding
 class SimulationActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySimulationBinding
     private lateinit var app: MyApplication
+    private lateinit var adapter: RecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +23,14 @@ class SimulationActivity : AppCompatActivity() {
         app = application as MyApplication
         val sensorDataList = app.sensorData
 
+        adapter = RecyclerAdapter(sensorDataList) { sensorData, position ->
+            adapter.updateItem(sensorData, position)
+            app.saveSensorDataToFile()
+        }
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SimulationActivity)
-            adapter = RecyclerAdapter(sensorDataList)
+            adapter = this@SimulationActivity.adapter
         }
 
         binding.backBtn.setOnClickListener {
@@ -37,4 +43,5 @@ class SimulationActivity : AppCompatActivity() {
         }
     }
 }
+
 
