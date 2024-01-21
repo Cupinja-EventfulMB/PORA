@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.eventfulmb.R
+import com.example.eventfulmb.MyApplication
 import com.example.eventfulmb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var app: MyApplication
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+       // setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app = application as MyApplication
+
+        val topicToSubscribe = "people/detection"
+        app.subscribeToTopic(topicToSubscribe)
 
         binding.simulationActivityButton.setOnClickListener {
             val simulationIntent= Intent(this,SimulationActivity::class.java)
@@ -27,8 +34,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(settingsIntent)
         }
         binding.fabCamera.setOnClickListener{
-            Toast.makeText(this, "Camera button clicked!", Toast.LENGTH_SHORT).show()
-
+            val cameraIntent = Intent(this,CameraActivity::class.java)
+            startActivity(cameraIntent)
         }
 
         binding.messageButton.setOnClickListener {
@@ -36,7 +43,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Exit application
+        binding.distanceButton.setOnClickListener {
+            val intent = Intent(this, DistanceActivity::class.java)
+            startActivity(intent)
+        }
+
         val exitButton = binding.exitBtn
         exitButton.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Do you want to exit the application?")
@@ -45,4 +56,10 @@ class MainActivity : AppCompatActivity() {
                     .create().show()
         }
     }
+
+    override fun onDestroy() {
+        (application as MyApplication).disconnectMqtt()
+        super.onDestroy()
+    }
+
 }

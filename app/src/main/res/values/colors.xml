@@ -2,12 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gray">#3BCAC4CF</color>
+    <color name="gray">#E4706E72</color>
     <color name="grayLvl">#908686</color>
     <color name="transparent">#908686</color>
 
     <!-- Customize your light theme here. -->
-    <color name="primaryColorLight">#006684</color>
+    <color name="primaryColorLight">#42AAC8</color>
     <color name="onPrimaryColorLight">#ffffff</color>
     <color name="primaryContainerColorLight">#bde9ff</color>
     <color name="onPrimaryContainerColorLight">#001f2a</color>

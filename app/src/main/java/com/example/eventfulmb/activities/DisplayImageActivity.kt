@@ -1,44 +1,52 @@
 package com.example.eventfulmb.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.eventfulmb.MyApplication
-import com.example.eventfulmb.databinding.ActivityMessageBinding
+import com.example.eventfulmb.databinding.ActivityDisplayImageBinding
+import com.example.eventfulmb.module.Image
 import com.example.eventfulmb.module.Message
 import com.example.eventfulmb.module.MqttHandler
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.gson.Gson
-import java.time.LocalDateTime
 import com.google.gson.GsonBuilder
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class MessageActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMessageBinding
-    private lateinit var app: MyApplication
 
-    // Location variables
+class DisplayImageActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityDisplayImageBinding
+    private lateinit var app: MyApplication
+    private lateinit var imageUri: Uri
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val locationPermissionCode = 42
     private lateinit var locationRequest: LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMessageBinding.inflate(layoutInflater)
+        binding = ActivityDisplayImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         app = application as MyApplication
 
+        app.mqttHandler?.changeContext(this)
 
-        binding.messageInput.setEndIconOnClickListener(View.OnClickListener {
-            binding.messageInput.editText?.text = null
-        })
+        app.subscribeToTopic("people/detection")
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -47,48 +55,47 @@ class MessageActivity : AppCompatActivity() {
             10000
         ).build()
 
-        binding.saveButton.setOnClickListener {
-            val messageBody = binding.messageInput.editText?.text.toString()
-            val messageCategory = binding.menu.editText?.text.toString()
+        val imageView: ImageView = binding.imageView
 
-            if (messageBody.isNotEmpty()) {
-                saveMessageWithLocation(messageBody, messageCategory)
-            } else {
-                Log.d("MessageActivity", "Message body is empty. Cannot save.")
-            }
-        }
-        // Back Btn
-        binding.backBtn.setOnClickListener {
-            finish()
-        }
+        imageUri = intent.getParcelableExtra("imageUri", Uri::class.java)!!
 
+        Glide.with(this)
+            .load(imageUri)
+            .into(imageView)
+
+        binding.sendButton.setOnClickListener {
+            saveImageWithLocation()
+        }
     }
 
-    private fun saveMessageWithLocation(messageBody: String, messageCategory: String) {
+    @SuppressLint("Recycle")
+    private fun readImageToByteArray(imageUri: Uri): ByteArray {
+        val inputStream = contentResolver.openInputStream(imageUri)
+        return inputStream?.readBytes() ?: byteArrayOf()
+    }
+
+
+    private fun saveImageWithLocation() {
         if (checkLocationPermission()) {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location ->
                     val latitude = location?.latitude ?: 0.0
                     val longitude = location?.longitude ?: 0.0
 
-                    val message = Message(
-                        body = messageBody,
-                        category = messageCategory,
+                    val image = Image(
+                        image = readImageToByteArray(imageUri),
                         time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                         latitude = latitude,
                         longitude = longitude
                     )
 
                     val gson: Gson = GsonBuilder().create()
-                    val jsonMessage: String = gson.toJson(message)
+                    val jsonMessage: String = gson.toJson(image)
 
-                    Log.d("MessageActivity", "Saved Message: $message")
-                    val topicToSubscribe = "send/message"
+
+                    val topicToSubscribe = "send/image"
                     app.publishMessage(topicToSubscribe, jsonMessage)
-
-                    binding.messageInput.editText?.text = null
-                    binding.menu.editText?.text = null
-                    binding.menu.clearFocus()
+                    Log.d("Context inside", this.toString())
                 }
         } else {
             requestLocationPermission()
@@ -110,12 +117,5 @@ class MessageActivity : AppCompatActivity() {
         )
     }
 
-
-/*
-    override fun onDestroy() {
-        (application as MyApplication).disconnectMqtt()
-        super.onDestroy()
-    }
-*/
 
 }

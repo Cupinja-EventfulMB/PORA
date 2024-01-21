@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/backBtn"
         android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="195dp"
         android:background="#00000000"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/sliderHour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +25,12 @@
         android:id="@+id/txtViewHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="64dp"
         android:text="@string/location"
-        android:textStyle="bold"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,47 +38,183 @@
         android:id="@+id/txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="@string/update_frequency"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223" />
+        app:layout_constraintTop_toBottomOf="@+id/txtViewHeading" />
+
+
+    <TextView
+        android:id="@+id/txtViewHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/set_hour"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sliderHour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/slider"
+        android:id="@+id/sliderHour"
         android:layout_width="356dp"
-        android:layout_height="95dp"
-        android:layout_marginStart="36dp"
-        android:stepSize="5.0"
-        android:value="10.0"
+        android:layout_height="0dp"
+        android:layout_marginBottom="146dp"
+        android:stepSize="1.0"
+        android:value="0.0"
         android:valueFrom="0.0"
-        android:valueTo="60.0"
+        android:valueTo="23.0"
         app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toTopOf="@+id/sliderSeconds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backBtn"
         app:thumbColor="@color/primaryColorDark"
         app:tickColorActive="@color/primaryColorLight"
         app:tickColorInactive="@color/onPrimaryColorDark"
-        app:trackColorActive="@color/primaryContainerColorLight"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/set_minutes"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sliderMinutes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtView"
-        app:layout_constraintVertical_bias="0.321" />
+        app:layout_constraintTop_toBottomOf="@+id/sliderHour"
+        app:layout_constraintVertical_bias="0.476" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderMinutes"
+        android:layout_width="356dp"
+        android:layout_height="95dp"
+        android:layout_marginBottom="48dp"
+        android:stepSize="1.0"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="59.0"
+        app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toTopOf="@+id/sliderSeconds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:thumbColor="@color/primaryColorDark"
+        app:tickColorActive="@color/primaryColorLight"
+        app:tickColorInactive="@color/onPrimaryColorDark"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewSeconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_seconds"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sliderSeconds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderMinutes"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderSeconds"
+        android:layout_width="356dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="252dp"
+        android:stepSize="1.0"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="59.0"
+        app:haloColor="#6F67D3FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderHour"
+        app:thumbColor="@color/primaryColorDark"
+        app:tickColorActive="@color/primaryColorLight"
+        app:tickColorInactive="@color/onPrimaryColorDark"
+        app:trackColorActive="@color/primaryContainerColorLight" />
+
+    <TextView
+        android:id="@+id/txtViewS"
+        android:layout_width="86dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/seconds"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewM"
+        app:layout_constraintTop_toBottomOf="@+id/sliderSeconds"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/txtViewM"
+        android:layout_width="86dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="167dp"
+        android:text="@string/minutes"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewH"
+        app:layout_constraintTop_toBottomOf="@+id/sliderSeconds"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/txtViewH"
+        android:layout_width="76dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="80dp"
+        android:text="@string/hours"
+        android:textColor="@color/gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toStartOf="@+id/txtViewM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderSeconds"
+        app:layout_constraintVertical_bias="0.5" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/saveButton"
         style="@style/FABStyleExtended"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:contentDescription="@string/save_button"
         android:text="@string/save"
         android:textColor="@color/primaryColorLight"
         app:icon="@drawable/baseline_save_alt_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925"
         app:maxImageSize="30dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="txtViewH,txtViewM,txtViewS"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
